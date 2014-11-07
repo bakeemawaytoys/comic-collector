@@ -12,7 +12,10 @@
                      "SAGA"
                      "SEX CRIMINALS"
                      "MASSIVE"
-                     "JUPITER'S LEGACY"})
+                     "JUPITER'S LEGACY"
+                     "LOW"
+                     "MEN OF WRATH"
+                     "THOR"})
 
 (def item-types #{"HC" "TP" "SC" "POSTER" "GN" "STATUE" "T/S" "HOODIE" "CASE" "DVD" "AF" "FIGURE"} )
 
