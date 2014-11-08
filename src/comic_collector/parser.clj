@@ -1,9 +1,9 @@
 (ns comic-collector.parser
   (:require [clojure.string :as str]))
 
-(def start-publishers-line "PREMIER PUBLISHERS")
+(def ^:private start-publishers-line "PREMIER PUBLISHERS")
 
-(def item-types #{"HC" "TP" "SC" "POSTER" "GN" "STATUE" "T/S" "HOODIE" "CASE" "DVD" "AF" "FIGURE"} )
+(def ^:private item-types #{"HC" "TP" "SC" "POSTER" "GN" "STATUE" "T/S" "HOODIE" "CASE" "DVD" "AF" "FIGURE"} )
 
 
 (defn- stringify [tokens]
