@@ -11,7 +11,7 @@
 
 (defn- classify [token attrs]
   (cond (= \# (first token)) (assoc attrs :type "ISSUE" :number token)
-        (not (nil? (:type attrs))) (assoc attrs :type token)
+        (contains? item-types token) (assoc attrs :type token)
         :else (assoc attrs :type "OTHER")))
 
 (defn- parse-name [tokens attributes]

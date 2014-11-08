@@ -1,8 +1,6 @@
 (ns comic-collector.core
   (:require [comic-collector.parser :as parser]))
 
-
-
 (def titles-to-buy #{
                      "BLACK SCIENCE"
                      "HAWKEYE"
