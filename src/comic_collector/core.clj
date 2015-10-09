@@ -1,20 +1,32 @@
 (ns comic-collector.core
   (:require [comic-collector.parser :as parser]))
 
-(def titles-to-buy { "ISSUE" #{
-                     "BLACK SCIENCE"
-                     "HAWKEYE"
-                     "EAST OF WEST"
-                     "MANHATTAN PROJECTS"
-                     "LAZARUS"
-                     "SECRET"
-                     "SAGA"
-                     "SEX CRIMINALS"
-                     "MASSIVE"
-                     "JUPITER'S LEGACY"
-                     "LOW"
-                     "MEN OF WRATH"
-                     "THOR"}})
+(def titles-to-buy {"ISSUE" #{
+                              "BLACK SCIENCE"
+                              "EAST OF WEST"
+                              "MANHATTAN PROJECTS"
+                              "MANHATTAN PROJECTS SUN BEYOND THE STARS"
+                              "LAZARUS"
+                              "SECRET"
+                              "SAGA"
+                              "SEX CRIMINALS"
+                              "JUPITER'S LEGACY"
+                              "JUPITERS LEGACY"
+                              "LOW"
+                              "ODYC"
+                              "ODY-C"
+                              "SOUTHERN BASTARDS"
+                              "NAMELESS"
+                              "DYING AND THE DEAD"
+                              "INVISIBLE REPUBLIC"
+                              "AUTUMNLANDS TOOTH & CLAW"
+                              "AUTUMNLANDS"
+                              "MS MARVEL"
+                              "INJECTION"
+                              "PAPER GIRLS"
+                              "WE STAND ON GUARD"
+                              "TOKYO GHOST"
+                              }})
 
 (defn- in-buy-list? [item]
   (let [items-to-buy (get titles-to-buy (:type item))]
@@ -23,5 +35,8 @@
 (defn -main
   "Main function"
   [& args]
-  (println (filter in-buy-list?  (with-open [reader (clojure.java.io/reader "http://www.previewsworld.com/shipping/newreleases.txt")]
-    (parser/parse-file (line-seq reader))))))
+  (println
+    (filter in-buy-list?
+            (with-open
+              [reader (clojure.java.io/reader "http://www.previewsworld.com/shipping/newreleases.txt")]
+                                  (parser/parse-file (line-seq reader))))))
