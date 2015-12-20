@@ -1,9 +1,11 @@
 (ns comic-collector.parser
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str])
+  (:import [java.time LocalDate]
+           [java.time.format DateTimeFormatter]))
 
 (def ^:private start-publishers-line "PREMIER PUBLISHERS")
 
-(def ^:private item-types #{"HC" "TP" "SC" "POSTER" "GN" "STATUE" "T/S" "HOODIE" "CASE" "DVD" "AF" "FIGURE"} )
+(def ^:private item-types #{"HC" "TP" "SC" "POSTER" "GN" "STATUE" "T/S" "HOODIE" "CASE" "DVD" "AF" "FIGURE"})
 
 
 (defn- stringify [tokens]
@@ -15,12 +17,12 @@
         :else (assoc attrs :type "OTHER")))
 
 (defn- parse-name [tokens attributes]
-  (let [ [name other] (split-with
-                        (fn [t]
-                          (and
-                            (not (= \# (first t)))
-                            (not (contains? item-types t))))
-                        tokens)]
+  (let [[name other] (split-with
+                       (fn [t]
+                         (and
+                           (not (= \# (first t)))
+                           (not (contains? item-types t))))
+                       tokens)]
     (classify (first other) (assoc attributes :name (stringify name) :notes (stringify (rest other))))))
 
 (defn- parse-item-line [line publisher]
@@ -57,6 +59,18 @@
   (if (= start-publishers-line (first lines))
     (handle-publisher (rest lines) [])
     (handle-preamble (rest lines))))
+
+(defn parse-date-line [lines]
+  "Extracts the release date from the first element in the lines argument.  Returns a vector of count two.
+  The first element in the vector is the remaining lines and the second is the parsed date.  If the first line
+  does not contain the release date, the first element in the result vector is the argument to the function
+  and the second is nil."
+  (let [line (re-matches #"New\s+Releases\s+For\s+(\d?\d/\d?\d/\d\d\d\d)" (first lines))
+        tail (rest lines)
+        f (DateTimeFormatter/ofPattern "M/d/yyyy")]
+    (if (and line (= (count line) 2))
+      [tail (LocalDate/parse (nth line 1) f)]
+      [lines nil])))
 
 (defn parse-file [lines]
   (handle-preamble lines))

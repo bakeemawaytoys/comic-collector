@@ -39,4 +39,8 @@
     (filter in-buy-list?
             (with-open
               [reader (clojure.java.io/reader "http://www.previewsworld.com/shipping/newreleases.txt")]
-                                  (parser/parse-file (line-seq reader))))))
+                                  (let [lines (line-seq reader)
+                                        [tail date] (parser/parse-date-line lines)
+                                        df java.time.format.DateTimeFormatter/ISO_DATE
+                                        _ (println "Available on" (.format df date))]
+                                    (parser/parse-file tail))))))
