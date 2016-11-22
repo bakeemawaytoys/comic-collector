@@ -8,7 +8,7 @@ The Preview World web site doesn't include the full certificate chain in the TLS
 
 ## License
 
-Copyright © 2015 Ryan S. Johnson
+Copyright © 2016 Ryan S. Johnson
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
