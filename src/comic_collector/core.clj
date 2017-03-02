@@ -1,6 +1,7 @@
 (ns comic-collector.core
   (:require [comic-collector.parser :as parser]
             [io.aviso.columns :as c]
+            [io.aviso.ansi :as ansi]
             [clj-time.core :as t])
   (:import (java.time.format DateTimeFormatter FormatStyle)
            (java.time LocalDate DayOfWeek)))
@@ -45,7 +46,13 @@
                                          [:left (c/max-value-length elements :publisher)]
                                          " | "
                                          :none)]
-                         (c/write-rows *out* formatter [:name :cost :number :publisher :notes] elements)))
+                         (c/write-rows *out* formatter
+                                       [(fn [m] (ansi/cyan (:name m)))
+                                        (fn [m] (ansi/blue (:cost m)))
+                                        (fn [m] (ansi/yellow (:number m)))
+                                        (fn [m] (ansi/green (:publisher m)))
+                                        :notes]
+                                       elements)))
 
 (defn -main
   "Main function"
@@ -57,5 +64,5 @@
               (let [lines (line-seq reader)
                     [tail date] (parser/parse-date-line lines)
                     df DateTimeFormatter/ISO_DATE
-                    _ (println "Available on" (.format df date))]
+                    _ (println (ansi/bold "Available on") (ansi/bold-red (.format df date)))]
                 (parser/parse-file tail))))))
