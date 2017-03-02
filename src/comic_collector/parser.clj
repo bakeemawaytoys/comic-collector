@@ -1,5 +1,7 @@
 (ns comic-collector.parser
-  (:require [clojure.string :as str])
+  (:require [clojure.string :as str]
+            [clj-time.format :as fmt]
+            [clj-time.core :as t])
   (:import [java.time LocalDate]
            [java.time.format DateTimeFormatter]))
 
@@ -67,9 +69,9 @@
   and the second is nil."
   (let [line (re-matches #"New\s+Releases\s+For\s+(\d?\d/\d?\d/\d\d\d\d)" (first lines))
         tail (rest lines)
-        f (DateTimeFormatter/ofPattern "M/d/yyyy")]
+        formatter (fmt/formatter "M/d/yyyy")]
     (if (and line (= (count line) 2))
-      [tail (LocalDate/parse (nth line 1) f)]
+      [tail (fmt/parse-local-date formatter (nth line 1))]
       [lines nil])))
 
 (defn parse-file [lines]

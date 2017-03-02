@@ -2,9 +2,8 @@
   (:require [comic-collector.parser :as parser]
             [io.aviso.columns :as c]
             [io.aviso.ansi :as ansi]
-            [clj-time.core :as t])
-  (:import (java.time.format DateTimeFormatter FormatStyle)
-           (java.time LocalDate DayOfWeek)))
+            [clj-time.core :as t]
+            [clj-time.format :as fmt]))
 
 (def titles-to-buy {"ISSUE" #{
                               "BLACK SCIENCE"
@@ -29,11 +28,12 @@
     (contains? items-to-buy (:name item))))
 
 (defn calculate-release-date []
-  (let [now (LocalDate/now)
-        adjustment (- (.getValue (DayOfWeek/WEDNESDAY)) (.getValue (DayOfWeek/from now)))
-        release-date (.plusDays now adjustment)
-        formatter (DateTimeFormatter/ofLocalizedDate FormatStyle/SHORT)]
-    (.format formatter release-date)
+  (let [now (t/now)
+        wednesday 3
+        adjustment (- wednesday (t/day-of-week now))
+        release-date (t/plus now (t/days adjustment))
+        formatter (fmt/formatter "MM/dd/yyyy")]
+    (fmt/unparse formatter release-date)
     ))
 
 
@@ -65,6 +65,6 @@
               [reader (clojure.java.io/reader (str "https://www.previewsworld.com/NewReleases/Export?format=txt&releaseDate=" (calculate-release-date)))]
               (let [lines (line-seq reader)
                     [tail date] (parser/parse-date-line lines)
-                    df DateTimeFormatter/ISO_DATE
-                    _ (println (ansi/bold "Available on") (ansi/bold-red (.format df date)))]
+                    formatter (:date fmt/formatters)
+                    _ (println (ansi/bold "Available on") (ansi/bold-red (fmt/unparse-local-date formatter date)))]
                 (parser/parse-file tail))))))
