@@ -36,15 +36,17 @@
     (.format formatter release-date)
     ))
 
-(defn table [elements] (let [formatter (c/format-columns
+
+(defn table [elements] (let [separator (ansi/bold " | ")
+                          formatter (c/format-columns
                                          [:left (c/max-value-length elements :name)]
-                                         " | "
+                                         separator
                                          6
-                                         " | "
+                                         separator
                                          5
-                                         " | "
+                                         separator
                                          [:left (c/max-value-length elements :publisher)]
-                                         " | "
+                                         separator
                                          :none)]
                          (c/write-rows *out* formatter
                                        [(fn [m] (ansi/cyan (:name m)))
