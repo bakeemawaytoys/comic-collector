@@ -1,5 +1,7 @@
 (ns comic-collector.core
-  (:require [comic-collector.parser :as parser])
+  (:require [comic-collector.parser :as parser]
+            [io.aviso.columns :as c]
+            [clj-time.core :as t])
   (:import (java.time.format DateTimeFormatter FormatStyle)
            (java.time LocalDate DayOfWeek)))
 
@@ -30,18 +32,30 @@
         adjustment (- (.getValue (DayOfWeek/WEDNESDAY)) (.getValue (DayOfWeek/from now)))
         release-date (.plusDays now adjustment)
         formatter (DateTimeFormatter/ofLocalizedDate FormatStyle/SHORT)]
-      (.format formatter release-date)
+    (.format formatter release-date)
     ))
+
+(defn table [elements] (let [formatter (c/format-columns
+                                         [:left (c/max-value-length elements :name)]
+                                         " | "
+                                         6
+                                         " | "
+                                         5
+                                         " | "
+                                         [:left (c/max-value-length elements :publisher)]
+                                         " | "
+                                         :none)]
+                         (c/write-rows *out* formatter [:name :cost :number :publisher :notes] elements)))
 
 (defn -main
   "Main function"
   [& args]
-  (println
+  (table
     (filter in-buy-list?
             (with-open
               [reader (clojure.java.io/reader (str "https://www.previewsworld.com/NewReleases/Export?format=txt&releaseDate=" (calculate-release-date)))]
-                                  (let [lines (line-seq reader)
-                                        [tail date] (parser/parse-date-line lines)
-                                        df DateTimeFormatter/ISO_DATE
-                                        _ (println "Available on" (.format df date))]
-                                    (parser/parse-file tail))))))
+              (let [lines (line-seq reader)
+                    [tail date] (parser/parse-date-line lines)
+                    df DateTimeFormatter/ISO_DATE
+                    _ (println "Available on" (.format df date))]
+                (parser/parse-file tail))))))
