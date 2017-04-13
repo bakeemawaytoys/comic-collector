@@ -1,9 +1,7 @@
 (ns comic-collector.parser
   (:require [clojure.string :as str]
             [clj-time.format :as fmt]
-            [clj-time.core :as t])
-  (:import [java.time LocalDate]
-           [java.time.format DateTimeFormatter]))
+            [clj-time.core :as t]))
 
 (def ^:private start-publishers-line "PREMIER PUBLISHERS")
 

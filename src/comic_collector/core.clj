@@ -11,8 +11,6 @@
                               "LAZARUS"
                               "SAGA"
                               "SEX CRIMINALS"
-                              "JUPITER'S LEGACY"
-                              "JUPITERS LEGACY"
                               "KILL OR BE KILLED"
                               "LOW"
                               "ODYC"
@@ -41,17 +39,17 @@
                           formatter (c/format-columns
                                          [:left (c/max-value-length elements :name)]
                                          separator
-                                         6
-                                         separator
                                          5
+                                         separator
+                                         6
                                          separator
                                          [:left (c/max-value-length elements :publisher)]
                                          separator
                                          :none)]
                          (c/write-rows *out* formatter
                                        [(fn [m] (ansi/cyan (:name m)))
-                                        (fn [m] (ansi/blue (:cost m)))
                                         (fn [m] (ansi/yellow (:number m)))
+                                        (fn [m] (ansi/blue (:cost m)))
                                         (fn [m] (ansi/green (:publisher m)))
                                         :notes]
                                        elements)))
