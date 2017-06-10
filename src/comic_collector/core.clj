@@ -19,6 +19,9 @@
                               "AUTUMNLANDS TOOTH & CLAW"
                               "PAPER GIRLS"
                               "RAT QUEENS"
+                              "OLD GUARD"
+                              "CROSSWIND"
+                              "DYING AND THE DEAD"
                               }})
 
 (defn- in-buy-list? [item]
