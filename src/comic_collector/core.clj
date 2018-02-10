@@ -22,6 +22,7 @@
                               "OLD GUARD"
                               "CROSSWIND"
                               "DYING AND THE DEAD"
+                              "RUNAWAYS"
                               }})
 
 (defn- in-buy-list? [item]
