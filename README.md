@@ -8,7 +8,7 @@ The Preview World web site does not include the full certificate chain in the TL
 
 ## License
 
-Copyright © 2017 Ryan S. Johnson
+Copyright © 2018 Ryan S. Johnson
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

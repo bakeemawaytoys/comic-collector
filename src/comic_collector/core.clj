@@ -23,6 +23,7 @@
                               "CROSSWIND"
                               "DYING AND THE DEAD"
                               "RUNAWAYS"
+                              "EXILES"
                               }})
 
 (defn- in-buy-list? [item]

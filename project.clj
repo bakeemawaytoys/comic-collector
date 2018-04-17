@@ -6,5 +6,5 @@
   :main comic-collector.core
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/test.check "0.9.0"]
-                 [clj-time "0.14.2"]
+                 [clj-time "0.14.3"]
                  [io.aviso/pretty "0.1.34"]])
