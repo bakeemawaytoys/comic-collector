@@ -6,5 +6,7 @@
   :main comic-collector.core
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/test.check "0.9.0"]
-                 [clj-time "0.14.3"]
-                 [io.aviso/pretty "0.1.34"]])
+                 [clj-time "0.14.5"]
+                 [io.aviso/pretty "0.1.35"]
+                 ;; Upgrading rrb-vector due to https://dev.clojure.org/jira/browse/CRRBV-18
+                 [org.clojure/core.rrb-vector "0.0.13"]])
