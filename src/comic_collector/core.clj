@@ -24,6 +24,9 @@
                               "DYING AND THE DEAD"
                               "RUNAWAYS"
                               "EXILES"
+                              "MAN-EATERS"
+                              "BLACKBIRD"
+                              "HEX WIVES"
                               }})
 
 (defn- in-buy-list? [item]
